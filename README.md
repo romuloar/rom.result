@@ -37,8 +37,9 @@ Install-Package Rom.Result
 
 | Group name      | Extensions | Group name      | Extensions |
 |:---------------:|:----------|:---------------:|:-----------|
-| **✅ Success** | 🔸 [GetResultDetailSuccess](#GetResultDetailSuccess)<br/>🔸 [GetResultDetailSuccessAsync](#GetResultDetailSuccessAsync)<br/>| **ℹ️ Info** | 🔸 [GetResultDetailInfo](#GetResultDetailInfo)<br/>🔸 [GetResultDetailInfoAsync](#GetResultDetailInfoAsync)<br/> |
-| **❌ Error** | 🔸 [GetResultDetailError](#GetResultDetailError)<br/>🔸 [GetResultDetailErrorAsync](#GetResultDetailErrorAsync)<br/><br/>**💥 Exception**<br/>🔸 [GetResultDetailFromException](#GetResultDetailFromException)<br/>🔸 [GetResultDetailFromExceptionAsync](#GetResultDetailFromExceptionAsync)<br/>| **⚠️ Warning** | 🔸 [GetResultDetailWarning](#GetResultDetailWarning)<br/>🔸 [GetResultDetailWarningAsync](#GetResultDetailWarningAsync)<br/> |
+| **✅ Success** | 🔸 [GetResultDetailSuccess](#GetResultDetailSuccess)<br />🔸 [GetResultDetailSuccessAsync](#GetResultDetailSuccessAsync)<br />| **ℹ️ Info** | 🔸 [GetResultDetailInfo](#GetResultDetailInfo)<br />🔸 [GetResultDetailInfoAsync](#GetResultDetailInfoAsync)<br /> |
+| **❌ Error** | 🔸 [GetResultDetailError](#GetResultDetailError)<br />🔸 [GetResultDetailErrorAsync](#GetResultDetailErrorAsync)<br /><br />**💥 Exception**<br />🔸 [GetResultDetailFromException](#GetResultDetailFromException)<br />🔸 [GetResultDetailFromExceptionAsync](#GetResultDetailFromExceptionAsync)<br />| **⚠️ Warning** | 🔸 [GetResultDetailWarning](#GetResultDetailWarning)<br />🔸 [GetResultDetailWarningAsync](#GetResultDetailWarningAsync)<br /> |
+| **⚙️ ResultDetailExtensions** | 🔸 [GetError](#GetError)<br />🔸 [GetErrorAsync](#GetErrorAsync)<br /><br />| |
 
 
 ### ✅ Success
@@ -298,6 +299,85 @@ catch (Exception ex)
     //   "resultData": null
     // }
 }
+```
+
+### ⚙ ResultDetailExtensions
+
+## GetError
+Creates a ResultDetail<T> with error result type, message, and optional date and parameters.
+
+### Examples:
+```csharp
+// Example 1: Basic error result
+var result = ResultDetailExtension.GetError<string>("An error occurred");
+// Output:
+// {
+//   "resultType": "Error",
+//   "parameters": null,
+//   "isSuccess": false,
+//   "message": "An error occurred",
+//   "timestamp": "2024-05-26T12:00:00.000Z",
+//   "resultData": null
+// }
+
+// Example 2: With date
+var result = ResultDetailExtension.GetError<int>("Error with date", "2024-01-01T12:00:00Z");
+// Output:
+// {
+//   "resultType": "Error",
+//   "parameters": null,
+//   "isSuccess": false,
+//   "message": "Error with date",
+//   "timestamp": "2024-01-01T12:00:00.000Z",
+//   "resultData": 0
+// }
+
+// Example 3: With parameters
+int code = 404;
+var result = ResultDetailExtension.GetError<object>("Error with params", () => code);
+// Output:
+// {
+//   "resultType": "Error",
+//   "parameters": { "code": 404 },
+//   "isSuccess": false,
+//   "message": "Error with params",
+//   "timestamp": "2024-05-26T12:00:00.000Z",
+//   "resultData": null
+// }
+*/
+```
+
+## GetErrorAsync
+Asynchronously creates a ResultDetail<T> with error result type, message, and optional date and parameters.
+
+### Examples:
+```csharp
+// Example 1: Basic error result
+// Example 1: Async error result
+var result = await ResultDetailExtension.GetErrorAsync<string>("Async error");
+// Output:
+// {
+//   "resultType": "Error",
+//   "parameters": null,
+//   "isSuccess": false,
+//   "message": "Async error",
+//   "timestamp": "2024-05-26T12:00:00.000Z",
+//   "resultData": null
+// }
+
+// Example 2: Async with date and parameters
+int value = 123;
+var result = await ResultDetailExtension.GetErrorAsync<int>("Async error with params", "2024-01-01T12:00:00Z", () => value);
+// Output:
+// {
+//   "resultType": "Error",
+//   "parameters": { "value": 123 },
+//   "isSuccess": false,
+//   "message": "Async error with params",
+//   "timestamp": "2024-01-01T12:00:00.000Z",
+//   "resultData": 0
+// }
+*/
 ```
 
 ### ℹ️ Info
